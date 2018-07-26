@@ -32,7 +32,7 @@ launch_emr = """
  source ~/.bash_profile; /home/deploy/automation/roles/cluster/cluster.sh launch,provision,deploy model_building_prod.conf
  {% else %} 
  echo "Launching EMR cluster in Non prod Env"
- echo "hive pwd is - $HIVEPASSWORD"  
+ HIVEPASSWORD = {{ params.HIVEPASSWORD }} 
  /home/ubuntu/airflow/pythonic_airflow/dags/dag2_start_emr.sh
  {% endif %}
  """
@@ -87,8 +87,7 @@ t1 = BashOperator(
     #bash_command="aws s3 ls",
     execution_timeout=timedelta(hours=6),
     pool='emr_model_building',
-    params={'ENV': ENV},
-    env={'HIVEPASSWORD': HIVEPASSWORD},
+    params={'ENV': ENV, 'HIVEPASSWORD': HIVEPASSWORD},
     dag=dag)
 
 # t2 = BashOperator(
