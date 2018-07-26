@@ -11,4 +11,4 @@ aws emr create-cluster --auto-scaling-role EMR_AutoScaling_DefaultRole \
 --configurations '[{"Classification":"hive-site","Properties":{"javax.jdo.option.ConnectionUserName":"root","javax.jdo.option.ConnectionDriverName":"org.mariadb.jdbc.Driver","javax.jdo.option.ConnectionPassword":$HIVEPASSWORD,"javax.jdo.option.ConnectionURL":"jdbc:mysql://devmetastore.clmis5yhnool.ap-southeast-2.rds.amazonaws.com:3306/hive?createDatabaseIfNotExist=true"},"Configurations":[]}, {"Classification": "capacity-scheduler","Properties": {"yarn.scheduler.capacity.resource-calculator":"org.apache.hadoop.yarn.util.resource.DominantResourceCalculator"}}, {"Classification": "yarn-site","Properties": { "yarn.resourcemanager.scheduler.class": "org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler"} }]' \
 --scale-down-behavior TERMINATE_AT_TASK_COMPLETION \
 --region ap-southeast-2 \
---tags 'Name=6-6-18cluster01'
+--tags 'Name=26-7-2018-cluster01'
