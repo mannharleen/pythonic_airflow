@@ -8,6 +8,7 @@ START = datetime.combine(datetime.today() - timedelta(days=2), datetime.min.time
 DAG_NAME = 'emr_model_building'
 #ENV = 'DEV'
 ENV = Variable.get("ENV", default_var="DEV")
+HIVEPASSWORD = Variable.get("HIVEPASSWORD", default_var="DEV")
 
 print("obtained ENV as {}".format(ENV))
 
@@ -29,8 +30,9 @@ launch_emr = """
  {% if params.ENV == "PROD" %}
  echo "Launching EMR cluster in Prod Env"
  source ~/.bash_profile; /home/deploy/automation/roles/cluster/cluster.sh launch,provision,deploy model_building_prod.conf
- {% else %}
- echo "Launching EMR cluster in Stage Env"
+ {% else %} 
+ echo "Launching EMR cluster in Non prod Env"
+ HIVEPASSWORD = {params.HIVEPASSWORD} 
  /home/ubuntu/airflow/pythonic_airflow/dags/dag2_start_emr.sh
  {% endif %}
  """
@@ -81,10 +83,11 @@ terminate_cluster = """
 
 t1 = BashOperator(
     task_id='launch_emr',
-    bash_command=launch_emr,
+    #bash_command=launch_emr,
+    bash_command="aws s3 ls",
     execution_timeout=timedelta(hours=6),
     pool='emr_model_building',
-    params={'ENV': ENV},
+    params={'ENV': ENV, 'HIVEPASSWORD': HIVEPASSWORD},
     dag=dag)
 
 # t2 = BashOperator(
