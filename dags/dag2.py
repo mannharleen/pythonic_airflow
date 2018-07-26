@@ -70,23 +70,23 @@ terminate_cluster = """
  """
 
 # define the individual tasks using Operators
-t0 = ExternalTaskSensor(
-    task_id='wait_for_previous_run',
-    trigger_rule='one_success',
-    external_dag_id=DAG_NAME,
-    external_task_id='terminate_cluster',
-    allowed_states=['success'],
-    execution_delta=timedelta(days=1),
-    dag=dag)
-#
-# t1 = BashOperator(
-#     task_id='launch_emr',
-#     bash_command=launch_emr,
-#     execution_timeout=timedelta(hours=6),
-#     pool='emr_model_building',
-#     params={'ENV': ENV},
+# t0 = ExternalTaskSensor(
+#     task_id='wait_for_previous_run',
+#     trigger_rule='one_success',
+#     external_dag_id=DAG_NAME,
+#     external_task_id='terminate_cluster',
+#     allowed_states=['success'],
+#     execution_delta=timedelta(days=1),
 #     dag=dag)
-#
+
+t1 = BashOperator(
+    task_id='launch_emr',
+    bash_command=launch_emr,
+    execution_timeout=timedelta(hours=6),
+    pool='emr_model_building',
+    params={'ENV': ENV},
+    dag=dag)
+
 # t2 = BashOperator(
 #     task_id='run_sm_and_reputation',
 #     bash_command=run_sm_and_reputation,
@@ -112,4 +112,4 @@ t0 = ExternalTaskSensor(
 #     dag=dag)
 
 # construct the DAG
-t0
+t1
