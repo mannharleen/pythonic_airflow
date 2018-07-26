@@ -31,8 +31,9 @@ launch_emr = """
  echo "Launching EMR cluster in Prod Env"
  source ~/.bash_profile; /home/deploy/automation/roles/cluster/cluster.sh launch,provision,deploy model_building_prod.conf
  {% else %} 
- echo "Launching EMR cluster in Non prod Env"
+ echo "Launching EMR cluster in Non prod Env" 
  HIVEPASSWORD = {{ params.HIVEPASSWORD }} 
+ echo $HIVEPASSWORD
  /home/ubuntu/airflow/pythonic_airflow/dags/dag2_start_emr.sh
  {% endif %}
  """
