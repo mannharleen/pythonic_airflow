@@ -83,8 +83,8 @@ terminate_cluster = """
 
 t1 = BashOperator(
     task_id='launch_emr',
-    #bash_command=launch_emr,
-    bash_command="aws s3 ls",
+    bash_command=launch_emr,
+    #bash_command="aws s3 ls",
     execution_timeout=timedelta(hours=6),
     pool='emr_model_building',
     params={'ENV': ENV, 'HIVEPASSWORD': HIVEPASSWORD},
