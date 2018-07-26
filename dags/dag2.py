@@ -104,7 +104,7 @@ t4 = BashOperator(
     task_id='terminate_cluster',
     bash_command=terminate_cluster,
     execution_timeout=timedelta(hours=1),
-    params={'ENV': ENV, 'import_terminate_emr_cluster': import_terminate_emr_cluster},
+    params={'ENV': ENV},
     pool='emr_model_building',
     dag=dag)
 
