@@ -24,7 +24,7 @@ dag = DAG(DAG_NAME, default_args=default_args, schedule_interval='0 1 * * *', ca
 
 # t1: get absolute path of current location
 t1 = BashOperator(
-        task_id='t1_create_emr',
+        task_id='t1_get_path',
         dag=dag,
         bash_command='pwd',
         xcom_push=True
@@ -32,9 +32,9 @@ t1 = BashOperator(
 
 # t2: list the files using the abs path from t1
 t2 = BashOperator(
-        task_id='t1_create_emr',
+        task_id='t2_ls',
         dag=dag,
-        bash_command= "ls {{ti.xcom_pull(task_ids='t1_create_emr')}}",
+        bash_command= "ls {{ti.xcom_pull(task_ids='t1_get_path')}}",
         #xcom_push=True
     )
 
