@@ -31,9 +31,9 @@ dag = DAG(DAG_NAME, default_args=default_args, schedule_interval='0 1 * * *')
 
 def create_emr():
     conn = EmrHook(emr_conn_id='emr_default')
-    response = conn.create_job_flow(JOB_FLOW_OVERRIDES)
-    print (response['JobFlowId'])
-    return response
+    create_emr_response = conn.create_job_flow(JOB_FLOW_OVERRIDES)
+    print (create_emr_response['JobFlowId'])
+    return create_emr_response
 
 
 t1 = PythonOperator(
