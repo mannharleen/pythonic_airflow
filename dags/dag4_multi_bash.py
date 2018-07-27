@@ -35,7 +35,7 @@ t2 = BashOperator(
         task_id='t1_create_emr',
         dag=dag,
         bash_command= "ls {{ti.xcom_pull(task_ids='t1_create_emr')}}",
-        xcom_push=True
+        #xcom_push=True
     )
 
 t1 >> t2
