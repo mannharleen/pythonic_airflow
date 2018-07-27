@@ -9,6 +9,9 @@ DAG_NAME = 'dag3_emr_hook'
 # Use airflow env variables
 ENV = Variable.get("ENV", default_var="DEV")
 HIVEPASSWORD = Variable.get("HIVEPASSWORD", default_var="DEV")      # should ideally be dev.hivepassword !!!
+JOB_FLOW_OVERRIDES = {
+    'Name': str(datetime.today()) + '_job_flow_name'
+}
 
 print("obtained ENV as {}".format(ENV))
 
@@ -28,7 +31,7 @@ dag = DAG(DAG_NAME, default_args=default_args, schedule_interval='0 1 * * *')
 
 def create_emr():
     conn = EmrHook(emr_conn_id='emr_default')
-    response = conn.create_job_flow(None)
+    response = conn.create_job_flow(JOB_FLOW_OVERRIDES)
     print (response['JobFlowId'])
     return response
 
