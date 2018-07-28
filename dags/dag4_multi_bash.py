@@ -34,7 +34,7 @@ t1 = BashOperator(
 t2 = BashOperator(
         task_id='t2',
         dag=dag,
-        bash_command= "ls {{ti.xcom_pull(task_ids=t1)}}",
+        bash_command= "ls {{ti.xcom_pull(task_ids='t1')}}",
         #xcom_push=True
     )
 
